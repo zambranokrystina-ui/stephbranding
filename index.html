@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tu marca: cuéntame cómo la ves</title>
+<title>Diagnóstico de tu oferta de valor</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -154,7 +154,7 @@
   <!-- ══ CABECERA ══ -->
   <div class="cab">
     <div class="marca">Mentes Abundantes</div>
-    <div class="sello">Encuesta de marca</div>
+    <div class="sello">Diagnóstico de oferta de valor</div>
     <div class="barra-fila">
       <div></div>
       <div class="paso" id="paso"></div>
@@ -178,156 +178,60 @@
 /* ════════════════════════════════════════════════════
    PEGA AQUÍ LA URL DE TU APPS SCRIPT (termina en /exec)
    ════════════════════════════════════════════════════ */
-var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzWzSqxH9ryphLBbwqzcQOZuYqxTC4Ty-CBaIswYlbHdzZqx5cAvm2uoT-ySpgZ3yjV/exec';
-
-/* ── Definición de la encuesta ── */
-var PARES = [
-  ['Clásica','Moderna'],
-  ['Seria','Juguetona'],
-  ['Sobria','Abundante'],
-  ['Técnica','Humana'],
-  ['Calmada','Energética'],
-  ['Accesible','Exclusiva'],
-  ['Suave','Fuerte'],
-  ['Femenina','Neutral'],
-  ['Local, de barrio','Internacional']
-];
-
-var SECCIONES = [
-  { id:'intro' },
-
-  { id:'s1', num:'Sección 1 de 6', titulo:'Tu emprendimiento en tus palabras',
-    sub:'Antes de hablar de colores, quiero oírte describirlo tú.',
-    preguntas:[
-      {id:'p1', tipo:'parrafo', texto:'Si una desconocida te pregunta en una fiesta qué haces, ¿qué le contestas?',
-       ayuda:'Escríbelo tal como lo dirías, con tus palabras de todos los días.',
-       ph:'“Pues yo…”'},
-      {id:'p2', tipo:'parrafo', texto:'¿A quién le sirve lo que haces?',
-       ayuda:'Descríbela como si fuera una sola persona, no un grupo.',
-       ph:'Es una mujer que…'},
-      {id:'p3', tipo:'parrafo', texto:'¿Qué hace esa persona hoy, sin ti, para resolver lo que tú resolverías?',
-       ph:'Busca en internet, le pregunta a…'},
-      {id:'p4', tipo:'corto', texto:'¿Qué quieres que sienta alguien justo después de trabajar contigo?',
-       ph:'Que se siente…'},
-      {id:'p5', tipo:'parrafo', texto:'¿Qué NO es tu marca? Completa la frase: “Esto no es…”',
-       ayuda:'Piénsalo con calma. Lo que no quieres me dice más que lo que sí.',
-       ph:'Esto no es…'}
-    ]},
-
-  { id:'s2', num:'Sección 2 de 6', titulo:'La personalidad de tu marca',
-    sub:'Si tu marca fuera una persona, ¿cómo sería?',
-    preguntas:[
-      {id:'p6', tipo:'parrafo', texto:'Si tu marca fuera una persona, ¿cómo la describirías?',
-       ayuda:'Edad, forma de vestir, cómo habla, cómo te trata.',
-       ph:'Sería una mujer de…'},
-      {id:'p7', tipo:'radio', texto:'Esa persona, ¿te habla de tú o de usted?',
-       ops:['De tú, como una amiga','De tú, pero con respeto','De usted, profesional','Depende de a quién le hable']},
-      {id:'p8', tipo:'radio', texto:'¿Cuál de estas te suena más a ti?',
-       ops:['“Yo te enseño” — soy la que sabe y te transmito',
-            '“Vamos juntas” — te acompaño mientras aprendes',
-            '“Tú puedes” — te empujo y te sostengo',
-            '“Mira lo que descubrí” — comparto lo que voy aprendiendo']},
-      {id:'p9', tipo:'check', max:4, rejilla:true,
-       texto:'Elige hasta 4 palabras que quieres que la gente use para describir tu marca.',
-       ops:['Profesional','Cálida','Confiable','Clara','Moderna','Humana','Rigurosa','Cercana',
-            'Elegante','Práctica','Valiente','Serena','Fuerte','Honesta','Sencilla','Luminosa']},
-      {id:'p10', tipo:'check', max:4, rejilla:true,
-       texto:'Y ahora hasta 4 palabras que NO quieres que nadie use para describirla.',
-       ayuda:'Esta lista se vuelve mi filtro cuando te presente propuestas.',
-       ops:['Cursi','Fría','Aburrida','Pretenciosa','Infantil','Agresiva','Genérica','Complicada',
-            'Barata','Exagerada','Corporativa','Espiritual','Desordenada','Dramática','Llamativa','Anticuada']}
-    ]},
-
-  { id:'s3', num:'Sección 3 de 6', titulo:'El nombre',
-    sub:'Aquí no hay que decidir nada. Solo quiero ver todo lo que has pensado.',
-    preguntas:[
-      {id:'p11', tipo:'parrafo', texto:'¿Ya tienes nombres en mente? Escríbelos todos, aunque te parezcan malos.',
-       ayuda:'En serio, hasta los que descartaste. Un nombre malo suele tener dentro la palabra correcta.',
-       ph:'Uno por línea…'},
-      {id:'p12', tipo:'radio', texto:'¿Quieres que tu nombre propio sea parte de la marca?',
-       ops:['Sí, quiero que sea mi nombre','Sí, pero acompañado de algo más',
-            'No, prefiero un nombre aparte de mí','No sé, decidámoslo juntas']},
-      {id:'p13', tipo:'radio', texto:'¿En qué idioma quieres el nombre?',
-       ops:['En español','En inglés','Una mezcla de los dos',
-            'Una palabra que funcione igual en los dos idiomas','No me importa']},
-      {id:'p14', tipo:'parrafo', texto:'¿Qué palabras NO quieres que aparezcan en tu nombre ni en tu marca?',
-       ph:'No quiero que diga…'},
-      {id:'p15', tipo:'corto', texto:'Cuando alguien escuche el nombre de tu marca por primera vez, ¿qué quieres que piense?',
-       ph:'Que piense…'},
-      {id:'p16', tipo:'corto', texto:'¿Hay alguna palabra que sientas muy tuya?',
-       ayuda:'Puede ser una que uses mucho, o una que signifique algo para ti.'}
-    ]},
-
-  { id:'s4', num:'Sección 4 de 6', titulo:'Colores',
-    sub:'No tienes que armar una paleta. Solo dime qué te atrae y qué te repele.',
-    preguntas:[
-      {id:'p17', tipo:'check', rejilla:true, texto:'¿Qué colores te atraen para tu marca?',
-       ayuda:'Elige todos los que quieras.',
-       ops:['Azul profundo / marino','Azul claro / celeste','Verde oscuro / bosque','Verde suave / salvia',
-            'Terracota / tierra','Mostaza / ocre','Dorado','Vino / borgoña','Morado / violeta',
-            'Rosa suave','Naranja','Negro','Gris','Crema / beige','Blanco']},
-      {id:'p18', tipo:'corto', texto:'De los que elegiste, ¿cuál sería el principal?'},
-      {id:'p19', tipo:'check', rejilla:true, texto:'¿Qué colores NO quieres ver nunca en tu marca?',
-       ayuda:'Esto se vuelve una regla fija de tu manual de marca.',
-       ops:['Rosa','Morado','Amarillo','Naranja','Rojo','Verde brillante','Turquesa','Negro',
-            'Dorado','Colores pastel','Colores neón','Ninguno, estoy abierta']},
-      {id:'p20', tipo:'parrafo', texto:'¿Hay algún color que tenga un significado personal para ti? ¿Cuál y por qué?'},
-      {id:'p21', tipo:'radio', texto:'¿Cómo quieres que se sienta tu paleta?',
-       ops:['Sobria, con pocos colores y mucho espacio en blanco','Cálida, con tonos de tierra',
-            'Fresca y luminosa','Fuerte y con contraste','Suave y tranquila']}
-    ]},
-
-  { id:'s5', num:'Sección 5 de 6', titulo:'Estética visual',
-    sub:'Aquí sí te voy a pedir que busques ejemplos.',
-    preguntas:[
-      {id:'escalas', tipo:'escalas',
-       texto:'¿Hacia qué lado se inclina tu marca?',
-       ayuda:'Nueve pares de opuestos. Marca el punto donde la sientes. Si está justo en medio, marca el del centro.'},
-      {id:'p23', tipo:'parrafo',
-       texto:'Pega 3 a 5 enlaces de cuentas de Instagram, sitios web o tableros de Pinterest que te gusten visualmente.',
-       ayuda:'No tienen que ser de tu rubro. Y dime en una línea qué te gusta de cada uno.',
-       ph:'instagram.com/…  — me gusta porque…'},
-      {id:'p24', tipo:'parrafo', texto:'¿Y alguna que NO te guste? Pega el enlace y dime qué te choca.',
-       ayuda:'Esta es de las que más me sirven.'},
-      {id:'p25', tipo:'radio', texto:'¿Qué tipo de letra te atrae más?',
-       ops:['Con remates clásicos, tipo libro','Limpia y sin remates, tipo moderna',
-            'Escrita a mano o caligráfica','Una mezcla: títulos clásicos, texto moderno',
-            'No tengo idea, decídelo tú']},
-      {id:'p26', tipo:'radio', texto:'En tus publicaciones y en tu página, ¿qué prefieres ver?',
-       ops:['Fotos mías, mi cara','Fotos de personas, pero no necesariamente yo',
-            'Ilustraciones o dibujos','Solo tipografía y colores, sin fotos','Una mezcla']}
-    ]},
-
-  { id:'s6', num:'Sección 6 de 6', titulo:'Lo práctico',
-    sub:'Las últimas dos.',
-    preguntas:[
-      {id:'p27', tipo:'check', rejilla:true, texto:'¿Dónde vas a usar tu marca primero?',
-       ayuda:'Elige todo lo que aplique.',
-       ops:['Instagram y TikTok','Una página web','Tarjetas de presentación',
-            'Presentaciones o PDF para alumnas','Correos','Volantes impresos',
-            'Un logo para firmar documentos','Todavía no sé']},
-      {id:'p28', tipo:'parrafo', texto:'¿Hay algo más que quieras que yo sepa antes de empezar?'}
-    ]},
-
-  { id:'fin' }
-];
-
-/* ── Estado ── */
-var paso = 0;
-var R = {};            // respuestas
-var ESC = {};          // escalas: esc1..esc9
-var enviado = false;
+var ENDPOINT = 'PEGAR_URL_AQUI';
 
 var lienzo   = document.getElementById('lienzo');
 var elPaso   = document.getElementById('paso');
 var elProg   = document.getElementById('progreso');
+var elNav    = document.getElementById('nav');
 var btnAtras = document.getElementById('atras');
 var btnSig   = document.getElementById('siguiente');
-var elNav    = document.getElementById('nav');
 
-var TOTAL_SEC = 6; // secciones de preguntas
+var TOTAL_SEC = 5;
 
-/* ── Utilidades ── */
+/* ── Preguntas: el texto sale del diagnóstico de oferta de valor ── */
+var PREGUNTAS = {
+  q1: { etq:'¿Qué vendes y cuál es tu servicio o producto principal?',
+        ayuda:'Dilo como se lo dirías a alguien en una fiesta. Un par de frases bastan.' },
+  q2: { etq:'¿Qué quieres vender más?',
+        ayuda:'Lo que te gustaría que la gente comprara más, aunque hoy no sea lo que más vendes.' },
+  q3: { etq:'¿Quién necesita lo que ofreces?',
+        ayuda:'Piensa en una persona concreta, no en un grupo grande. Edad, situación y, si para ti importa, dónde vive.' },
+  q4: { etq:'¿Cuál es su problema más importante?',
+        ayuda:'Lo que más le cuesta o lo que le quita el sueño. Si puedes, en sus propias palabras.' },
+  q5: { etq:'¿Qué desea conseguir?',
+        ayuda:'El resultado que sueña, no el servicio. Qué quiere tener, poder hacer o sentir.' },
+  q6: { etq:'¿Qué cambia en la vida del cliente después de comprarte?',
+        ayuda:'Cómo estaba antes y cómo está después. Lo que se nota en su día a día.' },
+  q7: { etq:'¿Qué resultado concreto puedes ofrecer?',
+        ayuda:'Algo que se pueda ver: una cita bien atendida, un documento traducido, una conversación sin miedo. Sin prometer resultados de salud.' },
+  q8: { etq:'¿Por qué deberían elegirte?',
+        ayuda:'Lo que tú tienes y otras personas no, aunque te parezca obvio.' },
+  q9: { etq:'¿Qué haces diferente de tu competencia?',
+        ayuda:'Si no sabes quién es tu competencia, escribe cómo resuelve hoy esa persona el mismo problema.' },
+  q10: { etq:'¿Qué pruebas tienes de que tu solución funciona?',
+         ayuda:'Certificación, años de práctica, testimonios con permiso, casos. Si todavía no tienes, dilo: también es una respuesta útil.' }
+};
+
+var SECCIONES = [
+  { id:'intro' },
+  { id:'s1', num:'Sección 1 de 5', titulo:'Tu negocio',
+    sub:'Primero, lo que vendes hoy y lo que quisieras vender más.', preg:['q1','q2'] },
+  { id:'s2', num:'Sección 2 de 5', titulo:'Tu cliente ideal',
+    sub:'Una persona concreta, no un grupo grande.', preg:['q3','q4','q5'] },
+  { id:'s3', num:'Sección 3 de 5', titulo:'Lo que cambia',
+    sub:'Lo que pasa en la vida de esa persona cuando trabaja contigo.', preg:['q6','q7'] },
+  { id:'s4', num:'Sección 4 de 5', titulo:'Por qué tú',
+    sub:'Lo que te distingue y cómo lo demuestras.', preg:['q8','q9','q10'] },
+  { id:'s5', num:'Sección 5 de 5', titulo:'Tu nombre',
+    sub:'Último paso antes de enviar.', preg:[] },
+  { id:'fin' }
+];
+
+var R = {};
+var paso = 0;
+var enviado = false;
+
 function crear(tag, clase, texto){
   var e = document.createElement(tag);
   if (clase) e.className = clase;
@@ -349,7 +253,6 @@ function pintar(){
   else if (s.id === 'fin'){ pintarEnvio(); }
   else { pintarSeccion(s); }
 
-  // Cabecera
   if (s.id === 'intro' || s.id === 'fin'){
     elPaso.textContent = '';
     elProg.style.width = (s.id === 'fin' ? 100 : 0) + '%';
@@ -358,7 +261,6 @@ function pintar(){
     elProg.style.width = ((paso - 1) / TOTAL_SEC * 100 + (100 / TOTAL_SEC) * 0.15) + '%';
   }
 
-  // Navegación
   if (s.id === 'fin'){
     elNav.style.display = 'none';
   } else {
@@ -372,26 +274,32 @@ function pintar(){
   pedirSubida();
 }
 
+/* Solo el nombre es obligatorio, y va al final */
+function revisarSig(){
+  var s = SECCIONES[paso];
+  btnSig.disabled = (s.id === 's5' && !String(R.nombre || '').trim());
+}
+
 function pintarIntro(){
   var w = crear('div','bien');
 
-  var d = crear('div','disco'); var sp = crear('span','', '✦'); d.appendChild(sp); w.appendChild(d);
+  var d = crear('div','disco'); d.appendChild(crear('span','','✦')); w.appendChild(d);
 
-  var h = crear('h1'); h.textContent = 'Tu marca: cuéntame cómo la ves'; w.appendChild(h);
+  w.appendChild(crear('h1','','Tu oferta, en tus palabras'));
 
-  var e = crear('p','entrada');
-  e.textContent = 'Steph, esto es tarea para antes de nuestra sesión de marca. No hay respuestas ' +
-                  'correctas y no necesitas saber nada de diseño.';
-  w.appendChild(e);
+  w.appendChild(crear('p','entrada',
+    'Steph, este es el diagnóstico de tu oferta de valor. Diez preguntas en cuatro bloques. ' +
+    'Lo que escribas aquí es la base para encontrar a tu cliente ideal en nuestra sesión 3.'));
 
-  var pl = crear('div','pastilla','⏱ 20–25 minutos'); w.appendChild(pl);
+  w.appendChild(crear('div','pastilla','⏱ 25–30 minutos'));
 
   var av = crear('div','avisos');
   [
-    'Solo necesito saber cómo ves tú tu marca, qué te gusta y sobre todo qué no quieres.',
+    'No hay respuestas correctas. Escribe como piensas, no como suena bonito.',
+    'Un párrafo corto por pregunta es suficiente. Lo de fondo es lo que importa.',
     'Si una pregunta no la sabes contestar, déjala en blanco. Eso también me dice algo.',
     'Puedes ir y volver entre secciones con los botones de abajo.',
-    'Lo único que te pido obligatorio es tu nombre, al final.'
+    'Lo único obligatorio es tu nombre, al final.'
   ].forEach(function(t){ av.appendChild(crear('p','',t)); });
   w.appendChild(av);
 
@@ -402,134 +310,40 @@ function pintarSeccion(s){
   var cab = crear('div','sec-cab');
   cab.appendChild(crear('div','sec-num', s.num));
   var h = crear('h2'); h.textContent = s.titulo; cab.appendChild(h);
-  if (s.sub) cab.appendChild(crear('p','sec-sub', s.sub));
+  cab.appendChild(crear('p','sec-sub', s.sub));
   lienzo.appendChild(cab);
 
-  s.preguntas.forEach(function(q){
-    var caja = crear('div','preg');
-    var lab = crear('label','etq', q.texto); caja.appendChild(lab);
-    if (q.ayuda) caja.appendChild(crear('p','ayuda', q.ayuda));
-
-    if (q.tipo === 'corto'){
-      var i = document.createElement('input');
-      i.type = 'text'; i.value = R[q.id] || ''; i.placeholder = q.ph || '';
-      i.addEventListener('input', function(){ R[q.id] = i.value; });
-      caja.appendChild(i);
-    }
-
-    else if (q.tipo === 'parrafo'){
-      var t = document.createElement('textarea');
-      t.value = R[q.id] || ''; t.placeholder = q.ph || '';
-      t.addEventListener('input', function(){ R[q.id] = t.value; });
-      caja.appendChild(t);
-    }
-
-    else if (q.tipo === 'radio'){
-      var ct = crear('div','ops' + (q.rejilla ? ' rejilla' : ''));
-      q.ops.forEach(function(txt){
-        var b = crear('button','op r'); b.type = 'button';
-        b.appendChild(crear('span','caja', R[q.id] === txt ? '✓' : ''));
-        b.appendChild(crear('span','', txt));
-        if (R[q.id] === txt) b.classList.add('on');
-        b.addEventListener('click', function(){
-          R[q.id] = (R[q.id] === txt) ? '' : txt;
-          pintarSeccionSuave(s);
-        });
-        ct.appendChild(b);
-      });
-      caja.appendChild(ct);
-    }
-
-    else if (q.tipo === 'check'){
-      var sel = R[q.id] || [];
-      var ct2 = crear('div','ops' + (q.rejilla ? ' rejilla' : ''));
-      q.ops.forEach(function(txt){
-        var marcado = sel.indexOf(txt) !== -1;
-        var lleno = q.max && sel.length >= q.max && !marcado;
-        var b = crear('button','op c'); b.type = 'button';
-        b.appendChild(crear('span','caja', marcado ? '✓' : ''));
-        b.appendChild(crear('span','', txt));
-        if (marcado) b.classList.add('on');
-        if (lleno) b.classList.add('off');
-        b.addEventListener('click', function(){
-          var a = (R[q.id] || []).slice();
-          var k = a.indexOf(txt);
-          if (k !== -1) a.splice(k,1);
-          else { if (q.max && a.length >= q.max) return; a.push(txt); }
-          R[q.id] = a;
-          pintarSeccionSuave(s);
-        });
-        ct2.appendChild(b);
-      });
-      caja.appendChild(ct2);
-      if (q.max){
-        caja.appendChild(crear('div','tope',
-          sel.length + ' de ' + q.max + ' seleccionadas'));
-      }
-    }
-
-    else if (q.tipo === 'escalas'){
-      var box = crear('div','esc');
-      PARES.forEach(function(par, i){
-        var k = 'esc' + (i+1);
-        var f = crear('div','esc-f');
-        f.appendChild(crear('div','izq', par[0]));
-        var pts = crear('div','puntos');
-        for (var v = 1; v <= 5; v++){
-          (function(v){
-            var b = crear('button','pt' + (ESC[k] === v ? ' on' : ''));
-            b.type = 'button';
-            b.setAttribute('aria-label', par[0] + ' a ' + par[1] + ', nivel ' + v);
-            b.addEventListener('click', function(){
-              ESC[k] = (ESC[k] === v) ? 0 : v;
-              pintarSeccionSuave(s);
-            });
-            pts.appendChild(b);
-          })(v);
-        }
-        f.appendChild(pts);
-        f.appendChild(crear('div','der', par[1]));
-        box.appendChild(f);
-      });
-      caja.appendChild(box);
-    }
-
-    lienzo.appendChild(caja);
+  s.preg.forEach(function(id){
+    var q = PREGUNTAS[id];
+    var box = crear('div','preg');
+    box.appendChild(crear('div','etq', q.etq));
+    box.appendChild(crear('p','ayuda', q.ayuda));
+    var ta = crear('textarea');
+    ta.id = id;
+    ta.maxLength = 1000;
+    ta.value = R[id] || '';
+    ta.addEventListener('input', function(){ R[id] = ta.value; revisarSig(); });
+    box.appendChild(ta);
+    lienzo.appendChild(box);
   });
 
-  // Nombre obligatorio en la última sección de preguntas
-  if (s.id === 's6'){
-    var cn = crear('div','preg');
-    cn.appendChild(crear('label','etq','Tu nombre'));
-    cn.appendChild(crear('p','ayuda','Para que yo sepa que llegó la tuya.'));
-    var inn = document.createElement('input');
-    inn.type = 'text'; inn.value = R.nombre || ''; inn.placeholder = 'Nombre y apellido';
-    inn.addEventListener('input', function(){ R.nombre = inn.value; revisarSig(); });
-    cn.appendChild(inn);
-    lienzo.appendChild(cn);
+  if (s.id === 's5'){
+    var box2 = crear('div','preg');
+    box2.appendChild(crear('div','etq','¿Cómo te llamas?'));
+    box2.appendChild(crear('p','ayuda','Es lo único obligatorio. Me sirve para saber de quién son estas respuestas.'));
+    var inp = crear('input');
+    inp.type = 'text';
+    inp.id = 'nombre';
+    inp.autocomplete = 'name';
+    inp.maxLength = 120;
+    inp.value = R.nombre || '';
+    inp.addEventListener('input', function(){ R.nombre = inp.value; revisarSig(); });
+    box2.appendChild(inp);
+    lienzo.appendChild(box2);
   }
 }
 
-/* Redibuja la sección manteniendo la posición de lectura */
-function pintarSeccionSuave(s){
-  var y = 0;
-  try { y = window.pageYOffset || 0; } catch(e){}
-  lienzo.innerHTML = '';
-  pintarSeccion(s);
-  revisarSig();
-  try { window.scrollTo(0, y); } catch(e){}
-}
-
-function revisarSig(){
-  var s = SECCIONES[paso];
-  if (s.id === 's6'){
-    btnSig.disabled = !(R.nombre && R.nombre.trim().length > 1);
-  } else {
-    btnSig.disabled = false;
-  }
-}
-
-/* ── Envío por lotes (evita el límite de longitud de una URL GET) ── */
+/* ── Envío por lotes: un lote por respuesta, cada uno con el mismo id ── */
 function pintarEnvio(){
   var w = crear('div','centro');
   w.appendChild(crear('div','rueda'));
@@ -542,51 +356,31 @@ function pintarEnvio(){
 function pintarFin(ok){
   lienzo.innerHTML = '';
   var w = crear('div','centro');
-  var t = crear('div','tilde','✓'); w.appendChild(t);
+  w.appendChild(crear('div','tilde','✓'));
   var h = crear('h2');
-  h.textContent = ok ? '¡Gracias, ' + (R.nombre || '').split(' ')[0] + '!' : 'Listo';
+  h.textContent = ok ? '¡Gracias, ' + String(R.nombre || '').split(' ')[0] + '!' : 'Listo';
   w.appendChild(h);
-  var p1 = crear('p','fin-txt');
-  p1.textContent = ok
-    ? 'Con esto ya puedo trabajar. Voy a leer todo con calma antes de nuestra sesión. ' +
-      'No te preocupes por lo que dejaste en blanco: eso lo resolvemos juntas.'
-    : 'Tus respuestas quedaron registradas. Si algo no llegó, Krystina te escribe.';
-  w.appendChild(p1);
+  w.appendChild(crear('p','fin-txt', ok
+    ? 'Con esto ya puedo trabajar. Voy a leer tus respuestas con calma antes de nuestra sesión 3. ' +
+      'Lo que dejaste en blanco lo resolvemos juntas.'
+    : 'Tus respuestas quedaron registradas. Si algo no llegó, Krystina te escribe.'));
   lienzo.appendChild(w);
   elNav.style.display = 'none';
   pedirSubida();
 }
 
 function lotes(){
-  // Un objeto por lote, cada uno bajo ~1.200 caracteres al codificar
-  var id = 'st-' + Date.now() + '-' + Math.floor(Math.random()*9000+1000);
-  var L = [];
-
-  function multi(v){ return (v && v.length) ? v.join(' | ') : ''; }
-
-  L.push({ nombre:R.nombre||'', p4:R.p4||'', p7:R.p7||'', p8:R.p8||'',
-           p9:multi(R.p9), p10:multi(R.p10) });
-  L.push({ p1:R.p1||'', p2:R.p2||'' });
-  L.push({ p3:R.p3||'', p5:R.p5||'' });
-  L.push({ p6:R.p6||'', p11:R.p11||'' });
-  L.push({ p12:R.p12||'', p13:R.p13||'', p14:R.p14||'', p15:R.p15||'', p16:R.p16||'' });
-  L.push({ p17:multi(R.p17), p18:R.p18||'', p19:multi(R.p19), p21:R.p21||'' });
-  L.push({ p20:R.p20||'' });
-  var e = {};
-  for (var i=1;i<=9;i++) e['esc'+i] = ESC['esc'+i] || '';
-  e.p25 = R.p25||''; e.p26 = R.p26||''; e.p27 = multi(R.p27);
-  L.push(e);
-  L.push({ p23:R.p23||'' });
-  L.push({ p24:R.p24||'' });
-  L.push({ p28:R.p28||'', fin:'1' });
-
+  var id = 'dv-' + Date.now() + '-' + Math.floor(Math.random()*9000 + 1000);
+  var orden = ['nombre','q1','q2','q3','q4','q5','q6','q7','q8','q9','q10'];
+  var L = orden.map(function(k){ var o = {}; o[k] = R[k] || ''; return o; });
+  L[L.length - 1].fin = '1';
   return L.map(function(o){ o.id = id; return o; });
 }
 
 function aQuery(o){
   var partes = [];
-  for (var k in o){ if (Object.prototype.hasOwnProperty.call(o,k)){
-    partes.push(encodeURIComponent(k) + '=' + encodeURIComponent(String(o[k]).slice(0,1800)));
+  for (var k in o){ if (Object.prototype.hasOwnProperty.call(o, k)){
+    partes.push(encodeURIComponent(k) + '=' + encodeURIComponent(String(o[k]).slice(0, 1800)));
   }}
   partes.push('t=' + Date.now());
   return partes.join('&');
@@ -594,7 +388,6 @@ function aQuery(o){
 
 function enviar(){
   if (!ENDPOINT || ENDPOINT.indexOf('PEGAR_URL') === 0){
-    // Sin backend configurado: no dejamos a la persona colgada
     setTimeout(function(){ pintarFin(false); }, 900);
     return;
   }
@@ -615,13 +408,13 @@ function enviar(){
     var listo = false;
     function paso2(){ if (listo) return; listo = true; setTimeout(siguienteLote, 60); }
     ping.onload  = paso2;
-    ping.onerror = paso2;   // Apps Script devuelve texto, onerror es el caso normal
+    ping.onerror = paso2;
     ping.src = ENDPOINT + '?' + aQuery(o);
-    setTimeout(paso2, 3500); // respaldo por lote
+    setTimeout(paso2, 3000);
   }
 
   siguienteLote();
-  setTimeout(function(){ terminar(true); }, 42000); // respaldo global
+  setTimeout(function(){ terminar(true); }, 60000);
 }
 
 /* ── Navegación ── */
